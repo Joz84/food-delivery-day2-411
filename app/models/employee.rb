@@ -13,9 +13,9 @@ class Employee
     [@id, @username, @password, @role]
   end
 
-  # def to_s
-  #   "#{@username} - #{@role}"
-  # end
+  def to_s
+    "#{@username} - #{@role}"
+  end
 
   def manager?
     @role == "manager"

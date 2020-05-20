@@ -1,8 +1,9 @@
 class Router
-  def initialize(meals_controller, customers_controller, employee_repository)
+  def initialize(meals_controller, customers_controller, employee_repository, orders_controller)
     @meals_controller = meals_controller
     @customers_controller = customers_controller
     @employee_repository = employee_repository
+    @orders_controller = orders_controller
     @running = true
   end
 
@@ -64,6 +65,8 @@ class Router
     puts "2 - Add a meal"
     puts "3 - List customers"
     puts "4 - Add a customer"
+    puts "5 - List undelivered orders"
+    puts "6 - Add an order"
 
     print ">"
     return gets.chomp.to_i
@@ -76,10 +79,15 @@ class Router
     when 2 then @meals_controller.add
     when 3 then @customers_controller.list
     when 4 then @customers_controller.add
+    when 5 then @orders_controller.list_undelivered_orders
+    when 6 then @orders_controller.add
     else
       puts "Try again... :("
     end
   end
+
+
+
 
 end
 

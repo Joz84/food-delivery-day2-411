@@ -1,8 +1,8 @@
 class BaseView
 
   def display_all(elements)
-    elements.each do |element|
-      puts element.to_s
+    elements.each_with_index do |element, index|
+      puts "#{index + 1} : #{element.to_s}"
     end
   end
 
