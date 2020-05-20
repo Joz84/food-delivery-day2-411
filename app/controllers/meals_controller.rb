@@ -16,9 +16,9 @@ class MealsController
 
   def add
     # Demander à la vue de demander au user le nom du menu
-    name = @view.ask_name
+    name = @view.ask_string("name")
     # Demander à la vue de demander au user le prix du menu
-    price = @view.ask_price
+    price = @view.ask_integer("price")
     # Demander au model de créer une instace de meal
     meal = Meal.new(name: name, price: price)
     # Demander au repo d'ajouter ce meal à la liste de meals

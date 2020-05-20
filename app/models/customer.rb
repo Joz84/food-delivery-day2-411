@@ -1,18 +1,18 @@
-class Meal
+class Customer
   attr_accessor :id
-  attr_reader :name, :price
+  attr_reader :name, :address
 
   def initialize(attrs={})
     @id = attrs[:id]
     @name = attrs[:name]
-    @price = attrs[:price]
+    @address = attrs[:address]
   end
 
   def csv_row
-    [@id, @name, @price]
+    [@id, @name, @address]
   end
 
   def to_s
-    "#{@name} - #{@price}€"
+    "#{@name} - #{@address}"
   end
 end

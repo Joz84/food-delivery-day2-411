@@ -1,21 +1,59 @@
 class Router
-  def initialize(meals_controller)
+  def initialize(meals_controller, customers_controller, employee_repository)
     @meals_controller = meals_controller
+    @customers_controller = customers_controller
+    @employee_repository = employee_repository
     @running = true
   end
 
   def run
+    employee = sign_in
+    # employee = @session_controller.sign
+
     while @running
-      action = display_menu
-      print `clear`
-      get_actions(action)
+      if employee.manager?
+        action = display_manager_menu
+        print `clear`
+        get_manager_actions(action)
+      else
+        action = display_delivery_guy_menu
+        print `clear`
+        get_delivery_guy_actions(action)
+      end
     end
     puts "Goodbye my friend!"
   end
 
   private
 
-  def display_menu
+  def sign_in
+    # demander à l'utilisateur son username
+    # demander à l'utilisateur son password
+    # demander au repo  d'employee de retrouver l'employee par rapport à son username
+    # si on a retrouvé l'employee et si en plus son password est le même
+    #   afficher un message de validation
+    #   return employee
+    # sinon
+    #  rejouer sign_in
+    puts "username?"
+    print ">"
+    username = gets.chomp
+    puts "password?"
+    print ">"
+    password = gets.chomp
+    employee = @employee_repository.find_by_username(username)
+    if employee && employee.password == password
+        puts "Good, Welcome!!!"
+        return employee
+    else
+      puts "Bad credentials!!!"
+      sign_in
+    end
+  end
+
+
+
+  def display_manager_menu
     puts "--------------------"
     puts "------- Menu -------"
     puts "--------------------"
@@ -31,11 +69,13 @@ class Router
     return gets.chomp.to_i
   end
 
-  def get_actions(action)
+  def get_manager_actions(action)
     case action
     when 0 then @running = false
     when 1 then @meals_controller.list
     when 2 then @meals_controller.add
+    when 3 then @customers_controller.list
+    when 4 then @customers_controller.add
     else
       puts "Try again... :("
     end
